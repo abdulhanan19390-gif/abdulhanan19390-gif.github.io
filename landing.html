@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Qissa — Get our best stories in your inbox</title>
+<meta name="description" content="Join Qissa's free newsletter — short, well-considered reads on life, technology, culture, and travel, sent a few times a week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead__bar">
+    <div>
+      <div class="wordmark">Qis<span>sa</span></div>
+      <div class="tagline">Stories, sorted.</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="lp-hero">
+    <div class="kicker">Free newsletter</div>
+    <h1>Good stories, sorted into your inbox</h1>
+    <p class="dek">Join readers who get a short, well-considered read from Qissa a few times a week — no spam, unsubscribe any time.</p>
+
+    <!--
+      HOW TO CONNECT THIS FORM (free, 2 minutes):
+      1. Go to https://formspree.io and create a free account.
+      2. Create a new form — Formspree gives you an endpoint like:
+         https://formspree.io/f/xxxxxxxx
+      3. Replace YOUR_FORM_ID below with that ID.
+      4. Every signup will:
+         - be emailed straight to your Formspree account email
+         - also appear in a table on your Formspree dashboard (formspree.io)
+    -->
+    <form id="signupForm" class="signup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <div id="formStatus" class="form-status"></div>
+    <p class="form-note">Free forever. We never share your email.</p>
+  </section>
+
+  <section class="lp-perks">
+    <div class="perk">
+      <div class="kicker">01</div>
+      <h3>Short, not shallow</h3>
+      <p>Every piece is written to be finished, not skimmed — five to seven minutes, most days.</p>
+    </div>
+    <div class="perk">
+      <div class="kicker">02</div>
+      <h3>Four beats, no filler</h3>
+      <p>Technology, culture, travel, and everyday life — nothing else crowds the inbox.</p>
+    </div>
+    <div class="perk">
+      <div class="kicker">03</div>
+      <h3>A few times a week</h3>
+      <p>Not daily, not random. Enough to matter, not enough to ignore.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer__row">
+    <div>© 2026 Qissa. All rights reserved.</div>
+    <div class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('signupForm');
+  const status = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    status.className = 'form-status';
+    status.textContent = '';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.textContent = "Thanks — you're on the list.";
+        status.className = 'form-status success';
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong. Please try again.';
+        status.className = 'form-status error';
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please check your connection.';
+      status.className = 'form-status error';
+    }
+  });
+</script>
+
+</body>
+</html>
