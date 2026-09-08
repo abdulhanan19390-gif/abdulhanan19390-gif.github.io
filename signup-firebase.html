@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qissa — A newsletter for the unhurried</title>
+<meta name="description" content="Join Qissa's free newsletter — short, well-considered reads on life, technology, culture, and travel, sent a few times a week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --stage: #0B0A0C;
+    --stage-deep: #060606;
+    --spot: #D9A44A;
+    --ember: #C6432F;
+    --parchment: #F2EDE4;
+    --dim: #9C958A;
+    --line: rgba(242, 237, 228, 0.14);
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    background: var(--stage);
+    color: var(--parchment);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Stage: grain + spotlight + vignette ---------- */
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .stage::before {
+    /* spotlight glow */
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    width: 1100px;
+    height: 1100px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(217,164,74,0.16) 0%, rgba(217,164,74,0.06) 32%, transparent 62%);
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite alternate;
+  }
+
+  .stage::after {
+    /* vignette */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+  }
+
+  @keyframes breathe {
+    from { opacity: 0.75; transform: translateX(-50%) scale(1); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1.06); }
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 5;
+  }
+
+  /* ---------- Header mark ---------- */
+
+  .mark {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 24px 0;
+    font-family: var(--serif);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--dim);
+  }
+
+  .mark b { color: var(--parchment); font-weight: 500; }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+  }
+
+  .setting {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--spot);
+    margin: 0 0 22px;
+    letter-spacing: 0.01em;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 7vw, 74px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 15ch;
+    margin: 0 0 26px;
+  }
+
+  .lede {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--dim);
+    max-width: 46ch;
+    margin: 0 0 46px;
+  }
+
+  /* ---------- Form: subtitle-line style ---------- */
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .field {
+    text-align: left;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12.5px;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+
+  .field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--parchment);
+    font-family: var(--serif);
+    font-size: 19px;
+    padding: 6px 2px 12px;
+    outline: none;
+    transition: border-color 0.25s ease;
+  }
+
+  .field input::placeholder { color: rgba(242,237,228,0.28); }
+  .field input:focus { border-color: var(--spot); }
+
+  button {
+    background: var(--ember);
+    color: var(--parchment);
+    border: none;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 500;
+    padding: 14px 26px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  button:hover { background: #A9382A; }
+  button:disabled { opacity: 0.55; cursor: default; }
+
+  .status {
+    margin-top: 22px;
+    font-size: 14px;
+    min-height: 20px;
+  }
+  .status.success { color: #C9B26B; }
+  .status.error { color: #D8776B; }
+
+  .fine {
+    margin-top: 30px;
+    font-size: 12.5px;
+    color: rgba(156,149,138,0.7);
+  }
+
+  /* ---------- Credits strip ---------- */
+
+  .credits {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line);
+    padding: 30px 24px;
+  }
+
+  .credits__row {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 46px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .credit dt {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--dim);
+    margin: 0 0 4px;
+  }
+
+  .credit dd {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--parchment);
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 560px) {
+    .credits__row { gap: 26px 34px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage::before { animation: none; }
+  }
+
+  input:focus-visible, button:focus-visible {
+    outline: 2px solid var(--spot);
+    outline-offset: 3px;
+  }
+
+</style>
+</head>
+<body>
+
+<svg class="grain" xmlns="http://www.w3.org/2000/svg">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+
+<div class="stage">
+
+  <div class="mark"><b>Qissa</b> — stories, sorted</div>
+
+  <main class="hero">
+    <p class="setting">A newsletter for the unhurried</p>
+    <h1>Good stories, sorted into your inbox</h1>
+    <p class="lede">Short, well-considered reads on life, technology, culture, and travel — a few times a week, never more than you can finish.</p>
+
+    <form id="signupForm">
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="At least 6 characters" required minlength="6" aria-label="Password">
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div id="formStatus" class="status"></div>
+    <p class="fine">Free forever. Your password is stored securely, never in plain text.</p>
+  </main>
+
+  <div class="credits">
+    <dl class="credits__row">
+      <div class="credit">
+        <dt>Featuring</dt>
+        <dd>Technology · Culture · Travel</dd>
+      </div>
+      <div class="credit">
+        <dt>Runtime</dt>
+        <dd>5–7 minutes, most days</dd>
+      </div>
+      <div class="credit">
+        <dt>Schedule</dt>
+        <dd>A few times a week</dd>
+      </div>
+    </dl>
+  </div>
+
+</div>
+
+<!--
+  ============================================================
+  FIREBASE SETUP — do this once, free (5 minutes):
+
+  1. Go to https://console.firebase.google.com and sign in with
+     any Google account. Click "Add project", give it a name
+     (e.g. "qissa"), and finish the wizard (you can skip Google
+     Analytics).
+
+  2. Inside the project, click the "</>" (web) icon to register
+     a web app. Give it any nickname. Firebase will show you a
+     firebaseConfig object — copy the whole thing.
+
+  3. Paste your copied config over the placeholder object below
+     (the one that starts with "const firebaseConfig = {").
+
+  4. In the left sidebar go to Build > Authentication > click
+     "Get started" > under "Sign-in method" enable
+     "Email/Password" > Save.
+
+  5. That's it. Every person who signs up on this page will
+     appear under Authentication > Users in your Firebase
+     console — with their email and sign-up date (passwords are
+     never shown there; Firebase stores them hashed).
+  ============================================================
+-->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const form = document.getElementById('signupForm');
+  const status = document.getElementById('formStatus');
+  const button = form.querySelector('button');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    status.className = 'status';
+    status.textContent = '';
+    button.disabled = true;
+    button.textContent = 'Signing up…';
+
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+      status.textContent = "You're in — welcome to Qissa.";
+      status.className = 'status success';
+      form.reset();
+    } catch (err) {
+      let message = 'Something went wrong. Please try again.';
+      if (err.code === 'auth/email-already-in-use') {
+        message = 'That email is already signed up.';
+      } else if (err.code === 'auth/invalid-email') {
+        message = 'Please enter a valid email address.';
+      } else if (err.code === 'auth/weak-password') {
+        message = 'Password should be at least 6 characters.';
+      } else if (err.code === 'auth/api-key-not-valid' || err.code === 'auth/invalid-api-key') {
+        message = 'Sign up isn\'t configured yet — add your Firebase keys in the code.';
+      }
+      status.textContent = message;
+      status.className = 'status error';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Sign Up';
+    }
+  });
+</script>
+
+</body>
+</html>
